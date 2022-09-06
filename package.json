@@ -6,8 +6,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/react": "^18.0.18",
     "next": "latest",
     "react": "17.0.2",
     "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.2"
   }
 }
