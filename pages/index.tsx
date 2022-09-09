@@ -1,19 +1,17 @@
 import Head from 'next/head';
-import React, { useEffect } from 'react';
-import { useFetch } from '../hooks/useFetch';
+import React from 'react';
+import { List } from '../components/List';
 
 export default function Home() {
-  const { champsArr } = useFetch();
-  console.log(champsArr);
   return (
     <div className='container'>
       <Head>
-        <title>Create Next App</title>
+        <title>Champions</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
       <main></main>
-
+      <List />
       <footer></footer>
 
       <style jsx>{`

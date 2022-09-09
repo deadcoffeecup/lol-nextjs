@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react';
 
-import { championsAPI as champsAPI } from './consts';
-
-export const useFetch = () => {
-  const [champsArr, setChampsArr] = useState({});
-
+export const useFetch = (API: string) => {
+  const [fetchedObj, setFetchedObj] = useState({});
   useEffect(() => {
     setTimeout(() => {
-      fetch(champsAPI)
+      fetch(API)
         .then((res) => res.json())
-        .then((json) => setChampsArr(json.data))
-        .catch((err) => console.error('Fetch error:' + err));
-    }, 200);
+        .then((json) => setFetchedObj(json))
+        .catch((err) =>
+          console.error(`Fetch error with: \n ${API} \n ${err} `)
+        );
+    }, 100);
   }, []);
-
-  return { champsArr };
+  return { fetchedObj };
 };
