@@ -39,7 +39,7 @@ interface ChampionImageType {
 }
 export const List = () => {
   const { fetchedData } = useFetch(championsAPI);
-  const [championsArr, setChampionsArr] = useState<any>([]);
+  const [championsArr, setChampionsArr] = useState<ChampionType[]>([]);
   useEffect(() => {
     if (!!Object.keys(fetchedData).length) {
       setChampionsArr(Object.values(fetchedData.data));
