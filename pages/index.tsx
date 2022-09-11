@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import React from 'react';
-import { List } from '../components/List';
+import { List } from '../components/championsList/List';
 
 export default function Home() {
   return (
