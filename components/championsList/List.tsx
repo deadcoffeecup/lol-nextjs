@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useFetch } from '../../hooks/useFetch';
-import { championsAPI } from '../../constants/apis';
+import { championsAPI, championAvatarAPI } from '../../constants/apis';
 import Image from 'next/image';
 
 type ChampionType = {
@@ -38,8 +38,7 @@ interface ChampionImageType {
   w: number;
   h: number;
 }
-const championAvatarAPI =
-  'http://ddragon.leagueoflegends.com/cdn/12.17.1/img/champion/';
+
 export const List = () => {
   const { fetchedData } = useFetch(championsAPI);
   const [championsArr, setChampionsArr] = useState<ChampionType[]>([]);
