@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.3.4",
     "@types/react": "^18.0.18",
     "@types/styled-jsx": "^3.4.4",
     "next": "latest",

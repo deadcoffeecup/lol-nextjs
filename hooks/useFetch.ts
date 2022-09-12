@@ -14,3 +14,8 @@ export const useFetch = (API: string) => {
   }, []);
   return { fetchedData };
 };
+
+export const fetchData = async (API: string) =>
+  await fetch(API)
+    .then((res) => res.json())
+    .catch((err) => console.error(`Fetch error with: \n ${API} \n ${err} `));
