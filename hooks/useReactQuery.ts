@@ -6,4 +6,5 @@ export const useReactQuery = () => {
   const { data, status } = useQuery(['champions'], () =>
     fetchData(championsAPI)
   );
+  return { data };
 };
