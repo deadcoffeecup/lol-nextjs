@@ -8,4 +8,4 @@ const nextConfig = {
 //   domains: ['ddragon.leagueoflegends.com'],
 // },
 
-export default nextConfig;
+module.exports = nextConfig;

@@ -1,6 +1,11 @@
 import Head from 'next/head';
 import React from 'react';
 import { List } from '../components/championsList/List';
+import {
+  ChampionsQuery,
+  queryClient,
+} from '../components/championsList/ChampionsQuery';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 export default function Home() {
   return (
@@ -9,11 +14,15 @@ export default function Home() {
         <title>Champions</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
+      <QueryClientProvider client={queryClient}>
+        <main>
+          <ChampionsQuery />
 
-      <main></main>
-      <List />
-      <footer></footer>
+          {/* <List /> */}
+        </main>
 
+        <footer></footer>
+      </QueryClientProvider>
       <style jsx>{`
         .container {
           min-height: 100vh;
