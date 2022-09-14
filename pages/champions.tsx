@@ -1,8 +1,8 @@
 import React from 'react';
-import { useReactQuery } from '../hooks/useReactQuery';
+import { getChampions } from '../hooks/getChampions';
 
 export default function champions() {
-  const { data } = useReactQuery();
+  const { data } = getChampions();
   console.log(data);
   return (
     <div>

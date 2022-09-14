@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { championsAPI } from '../constants/apis';
-import { fetchData } from './useFetch';
 
-export const useReactQuery = () => {
+import axios from 'axios';
+
+export const getChampions = () => {
   const { data, status } = useQuery(['champions'], () =>
-    fetchData(championsAPI)
+    axios.get(championsAPI).then((res) => res.data)
   );
   return { data };
 };
