@@ -3,7 +3,7 @@ import { useFetch } from '../../hooks/useFetch';
 import { championsAPI, championAvatarAPI } from '../../constants/apis';
 import Image from 'next/image';
 
-type ChampionType = {
+export type ChampionType = {
   blurb: string;
   id: string;
   image: ChampionImageType;
