@@ -14,15 +14,15 @@ export default function Home() {
         <title>Champions</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <QueryClientProvider client={queryClient}>
-        <main>
-          <ChampionsQuery />
 
-          {/* <List /> */}
-        </main>
+      <main>
+        <ChampionsQuery />
 
-        <footer></footer>
-      </QueryClientProvider>
+        {/* <List /> */}
+      </main>
+
+      <footer></footer>
+
       <style jsx>{`
         .container {
           min-height: 100vh;

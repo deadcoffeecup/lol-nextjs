@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { getChampions } from '../../hooks/getChampions';
 import { ChampionType } from './List';
 
-export const queryClient = new QueryClient();
-
 export const ChampionsQuery = () => {
   const { data } = getChampions();
 
