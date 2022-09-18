@@ -10,28 +10,25 @@ const Champion = () => {
   const router = useRouter();
   const { championName } = router.query;
   const [ready, setReady] = useState(false);
-  const fetchChampions = async () => {
-    if (ready) {
-      return await axios
-        .get(championAPI + championName + '.json')
-        .then((res) => res.data)
-        .then((res) => res.data);
-    } else {
-      console.log('championName is undefined');
-    }
-  };
+  const fetchChampions = async () =>
+    await axios
+      .get(championAPI + championName + '.json')
+      .then((res) => res.data)
+      .then((res) => res.data);
+
+  const query = useQuery(['champions'], fetchChampions, { enabled: ready });
 
   useEffect(() => {
     if (router.isReady) setReady(() => true);
-  }, [router.isReady]);
+  }, [router.query.championName]);
 
-  const { data, status, isLoading, error, isFetching } = useQuery(
-    ['champions'],
-    fetchChampions
-  );
-  console.log(data);
+  // const { data, status, isLoading, error, isFetching } =
+  if (championName !== undefined) {
+    console.log('championName = ' + championName);
+    console.log(query.data);
+  }
 
-  return <>{data?.championName?.name}</>;
+  return <div>{query.data?.championName?.name}</div>;
 };
 
 export default Champion;
