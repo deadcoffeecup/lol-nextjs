@@ -16,19 +16,32 @@ const Champion = () => {
       .then((res) => res.data)
       .then((res) => res.data);
 
-  const query = useQuery(['champions'], fetchChampions, { enabled: ready });
+  const { data, status, isLoading, error, isFetching } = useQuery(
+    ['champions'],
+    fetchChampions,
+    { enabled: ready }
+  );
 
   useEffect(() => {
     if (router.isReady) setReady(() => true);
   }, [router.query.championName]);
 
-  // const { data, status, isLoading, error, isFetching } =
-  if (championName !== undefined) {
-    console.log('championName = ' + championName);
-    console.log(query.data);
-  }
+  console.log(
+    'championName = ' +
+      championName +
+      '\ndata = ' +
+      data +
+      '\nstatus = ' +
+      status +
+      '\nisLoading = ' +
+      isLoading +
+      '\nerror = ' +
+      error +
+      '\nisFetching = ' +
+      isFetching
+  );
 
-  return <div>{query.data?.championName?.name}</div>;
+  return <div>{data?.championName?.name}</div>;
 };
 
 export default Champion;
