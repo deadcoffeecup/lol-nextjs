@@ -1,10 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 import { List } from '../components/championsList/List';
-import {
-  ChampionsQuery,
-  queryClient,
-} from '../components/championsList/ChampionsQuery';
+import { ChampionsQuery } from '../components/championsList/ChampionsQuery';
 import { QueryClientProvider } from '@tanstack/react-query';
 
 export default function Home() {
