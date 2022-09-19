@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { ChampionType } from '../../components/championsList/List';
+import { ChampionType } from '../../types/champion-data.types';
 
 const championAPI =
   'http://ddragon.leagueoflegends.com/cdn/12.17.1/data/en_US/champion/';
