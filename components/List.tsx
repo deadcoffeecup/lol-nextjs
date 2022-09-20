@@ -14,26 +14,44 @@ export const List = () => {
       setChampionsArr(Object.values(fetchedData.data));
     }
   }, [fetchedData]);
-  console.log(championsArr);
-  return (
-    <div>
-      {championsArr.map((championData: ChampionType) => (
-        <div key={championData.id}>
-          <img
-            src={championAvatarAPI + championData.id + '.png'}
-            style={{ cursor: 'pointer' }}
-            onClick={() => router.push(`champion/${championData.id}`)}
-          />
-          <div>Name: {championData.name}</div>
-          <div>Motto: {championData.blurb}</div>
 
-          <ul>
-            {championData.tags.map((tagName) => (
-              <li key={tagName}>{tagName}</li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
+  return (
+    <>
+      <div className='champs'>
+        {championsArr.map((championData: ChampionType) => (
+          <div key={championData.id} className='champ'>
+            <img
+              src={championAvatarAPI + championData.id + '.png'}
+              style={{ cursor: 'pointer', borderRadius: '5px' }}
+              onClick={() => router.push(`champion/${championData.id}`)}
+            />
+            <div>Name: {championData.name}</div>
+
+            <ul>
+              {championData.tags.map((tagName) => (
+                <li key={tagName}>{tagName}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <style jsx>{`
+        .champs {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 20px;
+        }
+        .champ {
+          background-color: #2222;
+          border-radius: 5px;
+          padding: 20px;
+          display: flex;
+          flex-direction: column;
+          text-align: center;
+          justify-content: center;
+        }
+      `}</style>
+    </>
   );
 };

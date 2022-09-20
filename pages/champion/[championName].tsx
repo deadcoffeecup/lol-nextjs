@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { championAvatarAPI } from '../../constants/apis';
@@ -29,13 +30,24 @@ const Champion = () => {
   }, [data]);
 
   return (
-    <>
-      {isLoading && <h2>Loading...</h2>}
-      <img src={championAvatarAPI + champ?.id + '.png'} />
-      <div>{champ?.name}</div>
-      <div>{champ?.title}</div>
-      <div>{champ?.lore}</div>
-    </>
+    <div>
+      <div className='champ'>
+        {isLoading && <h2>Loading...</h2>}
+        <img src={championAvatarAPI + champ?.id + '.png'} />
+        <h1>{champ?.name}</h1>
+        <h2>{champ?.title}</h2>
+        <div>{champ?.lore}</div>
+        <Link href={'/ListOfChampions'}>{`<- go back`}</Link>
+      </div>
+      <style jsx>{`
+        .champ {
+          background-color: #2222;
+          border-radius: 5px;
+          padding: 20px;
+          text-align: center;
+        }
+      `}</style>
+    </div>
   );
 };
 
