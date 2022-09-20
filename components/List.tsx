@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useFetch } from '../hooks/useFetch';
 import { championsAPI, championAvatarAPI } from '../constants/apis';
-import Image from 'next/image';
 import { ChampionType } from '../types/champion-data.types';
 import { useRouter } from 'next/router';
 
