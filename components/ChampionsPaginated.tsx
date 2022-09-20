@@ -1,10 +1,10 @@
-import { QueryClient } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
-import { getChampions } from '../../hooks/getChampions';
-import { ChampionType } from './List';
+import { championAvatarAPI } from '../constants/apis';
+import { getChampions } from '../hooks/getChampions';
+import { ChampionType } from '../types/champion-data.types';
 
-export const ChampionsQuery = () => {
-  const { data } = getChampions();
+export const ChampionsPaginated = () => {
+  const { data, isLoading } = getChampions();
 
   const [championsCount, setChampionsCount] = useState<number>(5);
   const [showedData, setShowedData] = useState<ChampionType[]>(
@@ -20,12 +20,13 @@ export const ChampionsQuery = () => {
       );
     }
   }, [data]);
-
   return (
     <div>
+      {isLoading && <h2>Loading...</h2>}
       {showedData?.map((champion: ChampionType) => (
         <div key={champion.id}>
           <div>Name: {champion.name}</div>
+          <img src={championAvatarAPI + champion.name + '.png'} />
           <div>Motto: {champion.blurb}</div>
           <ul>
             {champion.tags.map((tagName) => (

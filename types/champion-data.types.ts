@@ -16,6 +16,7 @@ export type ChampionType = {
   tags: string[];
   title: string;
   version: string;
+  lore: string;
 };
 
 interface ChampionInfoType {

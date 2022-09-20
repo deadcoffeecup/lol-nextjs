@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { championAvatarAPI } from '../../constants/apis';
 import { ChampionType } from '../../types/champion-data.types';
 
 const championAPI =
@@ -18,7 +19,7 @@ const Champion = () => {
       .then((res) => res.data.data);
 
   const { data, status, isLoading, error, isFetching } = useQuery(
-    ['champions'],
+    [championName],
     fetchChampions,
     { enabled: router.isReady }
   );
@@ -27,7 +28,15 @@ const Champion = () => {
     if (data !== undefined) setChamp(data[championName as string]);
   }, [data]);
 
-  return <div>{champ?.name}</div>;
+  return (
+    <>
+      {isLoading && <h2>Loading...</h2>}
+      <img src={championAvatarAPI + champ?.id + '.png'} />
+      <div>{champ?.name}</div>
+      <div>{champ?.title}</div>
+      <div>{champ?.lore}</div>
+    </>
+  );
 };
 
 export default Champion;

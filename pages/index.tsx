@@ -1,19 +1,18 @@
 import Head from 'next/head';
 import React from 'react';
-import { List } from '../components/championsList/List';
-import { ChampionsQuery } from '../components/championsList/ChampionsQuery';
-import { QueryClientProvider } from '@tanstack/react-query';
+
+import { ChampionsPaginated } from '../components/ChampionsPaginated';
 
 export default function Home() {
   return (
     <div className='container'>
       <Head>
-        <title>Champions</title>
+        <title>All Champions</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
       <main>
-        <ChampionsQuery />
+        <ChampionsPaginated />
 
         {/* <List /> */}
       </main>

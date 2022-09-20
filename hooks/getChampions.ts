@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-
 import { championsAPI } from '../constants/apis';
 
 export const getChampions = () => {

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useFetch } from '../../hooks/useFetch';
-import { championsAPI, championAvatarAPI } from '../../constants/apis';
+import { useFetch } from '../hooks/useFetch';
+import { championsAPI, championAvatarAPI } from '../constants/apis';
 import Image from 'next/image';
-import { ChampionType } from '../../types/champion-data.types';
+import { ChampionType } from '../types/champion-data.types';
+import { useRouter } from 'next/router';
 
 export const List = () => {
   const { fetchedData } = useFetch(championsAPI);
   const [championsArr, setChampionsArr] = useState<ChampionType[]>([]);
+  const router = useRouter();
   useEffect(() => {
     if (!!Object.keys(fetchedData).length) {
       setChampionsArr(Object.values(fetchedData.data));
@@ -17,7 +19,11 @@ export const List = () => {
     <div>
       {championsArr.map((championData: ChampionType) => (
         <div key={championData.id}>
-          <img src={championAvatarAPI + championData.name + '.png'} />
+          <img
+            src={championAvatarAPI + championData.id + '.png'}
+            style={{ cursor: 'pointer' }}
+            onClick={() => router.push(`champion/${championData.id}`)}
+          />
           <div>Name: {championData.name}</div>
           <div>Motto: {championData.blurb}</div>
 
