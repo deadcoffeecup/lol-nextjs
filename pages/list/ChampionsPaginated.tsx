@@ -1,34 +1,39 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { championAvatarAPI } from '../constants/apis';
-import { getChampions } from '../hooks/getChampions';
-import { ChampionType } from '../types/champion-data.types';
+import { championAvatarAPI } from '../../constants/apis';
+import { getChampions } from '../../hooks/getChampions';
+import { ChampionType } from '../../types/champion-data.types';
 
-export const ChampionsPaginated = () => {
+export const ChampionsPaginated = ({ type }) => {
   const { data, isLoading } = getChampions();
   const router = useRouter();
-  const [championsCount, setChampionsCount] = useState<number>(20);
+  const NUMBER_OF_SHOWED_CHAMPS = 24;
+  const [championsCount, setChampionsCount] = useState<number>(24);
   const [showedData, setShowedData] = useState<ChampionType[]>(
     [] as ChampionType[]
   );
+
   useEffect(() => {
     if (data !== undefined) {
       setShowedData(
-        Array.from(Object.values(data.data)).slice(
-          championsCount - 20,
-          championsCount
-        ) as ChampionType[]
+        Array.from(Object.values(data.data) as ChampionType[])
+          .filter((el) => {
+            return type === undefined ? el : el.tags.includes(type);
+          })
+          .slice(championsCount - NUMBER_OF_SHOWED_CHAMPS, championsCount)
       );
     }
-  }, [data, championsCount]);
+  }, [data, championsCount, type]);
   return (
-    <>
-      {' '}
+    <div className='container'>
       <div>
         <button
           onClick={() =>
             setChampionsCount((prev) => {
-              return Math.max(prev - 20, 20);
+              return Math.max(
+                prev - NUMBER_OF_SHOWED_CHAMPS,
+                NUMBER_OF_SHOWED_CHAMPS
+              );
             })
           }
         >
@@ -37,7 +42,10 @@ export const ChampionsPaginated = () => {
         <button
           onClick={() =>
             setChampionsCount((prev) => {
-              return Math.min(prev + 20, Object.values(data.data).length);
+              return Math.min(
+                prev + NUMBER_OF_SHOWED_CHAMPS,
+                Object.values(data.data).length
+              );
             })
           }
         >
@@ -49,21 +57,31 @@ export const ChampionsPaginated = () => {
 
         {showedData?.map((champion: ChampionType) => (
           <div className='champ' key={champion.id}>
-            <div>Name: {champion.name}</div>
+            <div>{champion.name}</div>
             <img
-              onClick={() => router.push(`champion/${champion.id}`)}
+              style={{ cursor: 'pointer' }}
+              onClick={() => router.replace(`/champion/${champion.id}`)}
               src={championAvatarAPI + champion.id + '.png'}
             />
-            <div>Motto: {champion.lore}</div>
+
             <ul>
               {champion.tags.map((tagName) => (
-                <li key={tagName}>{tagName}</li>
+                <li
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => router.replace(`/list/${tagName}`)}
+                  key={tagName}
+                >
+                  {tagName}
+                </li>
               ))}
             </ul>
           </div>
         ))}
 
         <style jsx>{`
+          .container {
+            margin: 0 50px;
+          }
           .champs {
             width: 100%;
             display: flex;
@@ -78,8 +96,11 @@ export const ChampionsPaginated = () => {
             text-align: center;
             max-width: 30%;
           }
+          img {
+            border-radius: 5px;
+          }
         `}</style>
       </div>
-    </>
+    </div>
   );
 };
