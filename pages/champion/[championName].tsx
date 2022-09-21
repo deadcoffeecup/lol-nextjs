@@ -37,7 +37,7 @@ const Champion = () => {
         <h1>{champ?.name}</h1>
         <h2>{champ?.title}</h2>
         <div>{champ?.lore}</div>
-        <Link href={'/ListOfChampions'}>{`<- go back`}</Link>
+        <Link href={'/'}>{`<- go back`}</Link>
       </div>
       <style jsx>{`
         .champ {
