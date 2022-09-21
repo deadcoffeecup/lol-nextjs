@@ -36,7 +36,7 @@ const Champion = () => {
         <img src={championAvatarAPI + champ?.id + '.png'} />
         <h1>{champ?.name}</h1>
         <h2>{champ?.title}</h2>
-        <div>{champ?.lore}</div>
+        <div dangerouslySetInnerHTML={{ __html: champ?.lore }}></div>
         <Link href={'/list'}>{`<- go back`}</Link>
       </div>
       <style jsx>{`
