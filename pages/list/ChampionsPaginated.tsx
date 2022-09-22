@@ -8,7 +8,9 @@ export const ChampionsPaginated = ({ type }) => {
   const { data, isLoading } = getChampions();
   const router = useRouter();
   const NUMBER_OF_SHOWED_CHAMPS = 24;
-  const [championsCount, setChampionsCount] = useState<number>(24);
+  const [championsCount, setChampionsCount] = useState<number>(
+    NUMBER_OF_SHOWED_CHAMPS
+  );
   const [showedData, setShowedData] = useState<ChampionType[]>(
     [] as ChampionType[]
   );

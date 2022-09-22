@@ -1,22 +1,28 @@
-import { RefObject, useEffect } from 'react';
+import {
+  FunctionComponent,
+  MutableRefObject,
+  RefObject,
+  useEffect,
+} from 'react';
 
 interface IProps {
-  elementRef: RefObject<HTMLDivElement>;
-  className: string;
+  elementRef: MutableRefObject<any>;
 }
 
-export const useInterSectionObserver = ({ elementRef, className }: IProps) => {
+export const useInterSectionObserver = ({ elementRef }: IProps) => {
   useEffect(() => {
     const elsChilds = elementRef.current
-      ? Array.from(elementRef.current.querySelectorAll(`.${className}`))
+      ? Array.from(elementRef.current.querySelectorAll(`div`))
       : [];
 
     const observer = (_div: HTMLDivElement) =>
       new IntersectionObserver(
         (entries) => {
-          const lastEntry = entries[entries.length - 1];
+          let lastEntry = entries[entries.length - 1];
+          console.log(lastEntry);
+
           if (lastEntry.isIntersecting) {
-            //What to do
+            console.log(lastEntry);
           }
         },
         {
@@ -25,6 +31,8 @@ export const useInterSectionObserver = ({ elementRef, className }: IProps) => {
           threshold: 1,
         }
       );
+
+    elsChilds.forEach((_div: HTMLDivElement) => observer(_div).observe(_div));
 
     return () => {
       elsChilds.forEach((_div: HTMLDivElement) =>
