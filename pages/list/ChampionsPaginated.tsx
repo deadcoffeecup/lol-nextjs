@@ -20,7 +20,7 @@ export const ChampionsPaginated = ({ type }) => {
       setShowedData(
         Array.from(Object.values(data.data) as ChampionType[])
           .filter((el) => {
-            return type === undefined ? el : el.tags.includes(type);
+            return !type ? el : el.tags.includes(type);
           })
           .slice(championsCount - NUMBER_OF_SHOWED_CHAMPS, championsCount)
       );
