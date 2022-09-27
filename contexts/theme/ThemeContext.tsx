@@ -1,7 +1,15 @@
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import { useThemeDetector } from './useThemeDetector';
+import { ThemeContextProps } from './types';
 
-const ThemeContext = createContext({});
+const ThemeContext = createContext<ThemeContextProps>({
+  themeMode: 'light',
+  setThemeMode: () => null,
+});
+
+export const useTheme = () => {
+  return useContext(ThemeContext);
+};
 
 export const ThemeProvider = ({ children }) => {
   const deviceTheme = useThemeDetector();
