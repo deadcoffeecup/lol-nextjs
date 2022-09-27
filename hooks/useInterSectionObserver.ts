@@ -1,15 +1,16 @@
-import {
-  FunctionComponent,
-  MutableRefObject,
-  RefObject,
-  useEffect,
-} from 'react';
+import { Dispatch, MutableRefObject, SetStateAction, useEffect } from 'react';
 
 interface IProps {
   elementRef: MutableRefObject<any>;
+  setChampionsCount: Dispatch<SetStateAction<number>>;
+  NUMBER_OF_SHOWED_CHAMPS: number;
 }
 
-export const useInterSectionObserver = ({ elementRef }: IProps) => {
+export const useInterSectionObserver = ({
+  elementRef,
+  setChampionsCount,
+  NUMBER_OF_SHOWED_CHAMPS,
+}: IProps) => {
   useEffect(() => {
     const elsChilds = elementRef.current
       ? Array.from(elementRef.current.querySelectorAll(`div`))
@@ -19,10 +20,9 @@ export const useInterSectionObserver = ({ elementRef }: IProps) => {
       new IntersectionObserver(
         (entries) => {
           let lastEntry = entries[entries.length - 1];
-          console.log(lastEntry);
-
-          if (lastEntry.isIntersecting) {
-            console.log(lastEntry);
+          if (!!lastEntry?.isIntersecting) {
+            setChampionsCount((prev) => prev + NUMBER_OF_SHOWED_CHAMPS);
+            console.log(lastEntry.target);
           }
         },
         {

@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import { championAvatarAPI } from '../../constants/apis';
 import { getChampions } from '../../hooks/getChampions';
@@ -8,7 +7,6 @@ import { ChampionType } from '../../types/champion-data.types';
 const LazyChampionsPaginated = ({}) => {
   const { data, isLoading } = getChampions();
   const elementRef = useRef(null);
-  const router = useRouter();
   const NUMBER_OF_SHOWED_CHAMPS = 5;
   const [championsCount, setChampionsCount] = useState<number>(
     NUMBER_OF_SHOWED_CHAMPS
@@ -17,13 +15,17 @@ const LazyChampionsPaginated = ({}) => {
     [] as ChampionType[]
   );
 
-  useInterSectionObserver({ elementRef });
+  useInterSectionObserver({
+    elementRef,
+    setChampionsCount,
+    NUMBER_OF_SHOWED_CHAMPS,
+  });
 
   useEffect(() => {
     if (data !== undefined) {
       setShowedData(
         Array.from(Object.values(data.data) as ChampionType[]).slice(
-          championsCount - NUMBER_OF_SHOWED_CHAMPS,
+          0,
           championsCount
         )
       );
