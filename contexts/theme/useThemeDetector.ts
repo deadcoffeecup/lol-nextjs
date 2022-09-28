@@ -1,8 +1,8 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const useThemeDetector = () => {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
-  useLayoutEffect(() => {
+  useEffect(() => {
     const mqListener = (e: any) => {
       setIsDarkTheme(e.matches);
     };

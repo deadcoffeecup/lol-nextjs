@@ -2,35 +2,27 @@ import { Dispatch, MutableRefObject, SetStateAction, useEffect } from 'react';
 
 interface IProps {
   elementRef: MutableRefObject<any>;
-  setChampionsCount: Dispatch<SetStateAction<number>>;
-  NUMBER_OF_SHOWED_CHAMPS: number;
+  onIntersect: void;
 }
 
-export const useInterSectionObserver = ({
+export const useIntersectionObserver = ({
   elementRef,
-  setChampionsCount,
-  NUMBER_OF_SHOWED_CHAMPS,
+  onIntersect,
 }: IProps) => {
+  const observer = (_div: HTMLDivElement) =>
+    new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => entry.isIntersecting && onIntersect),
+      {
+        // root,
+        rootMargin: '10px',
+        threshold: 1,
+      }
+    );
   useEffect(() => {
     const elsChilds = elementRef.current
       ? Array.from(elementRef.current.querySelectorAll(`div`))
       : [];
-
-    const observer = (_div: HTMLDivElement) =>
-      new IntersectionObserver(
-        (entries) => {
-          let lastEntry = entries[entries.length - 1];
-          if (!!lastEntry?.isIntersecting) {
-            setChampionsCount((prev) => prev + NUMBER_OF_SHOWED_CHAMPS);
-            console.log(lastEntry.target);
-          }
-        },
-        {
-          // root,
-          // rootMargin,
-          threshold: 1,
-        }
-      );
 
     elsChilds.forEach((_div: HTMLDivElement) => observer(_div).observe(_div));
 

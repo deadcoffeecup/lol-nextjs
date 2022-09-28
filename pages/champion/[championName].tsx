@@ -26,7 +26,7 @@ const Champion = () => {
   );
 
   useEffect(() => {
-    if (data !== undefined) setChamp(data[championName as string]);
+    if (data) setChamp(data[championName as string]);
   }, [data]);
 
   return (
