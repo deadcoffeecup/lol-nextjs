@@ -18,13 +18,17 @@ function App({ Component, pageProps }) {
       <style jsx global>{`
         html,
         body {
+          min-height: 100vh;
           height: 100%;
           width: 100%;
         }
-
         * {
+          transition: 0.1s;
           box-sizing: border-box;
           margin: 0;
+        }
+        #__next {
+          height: 100%;
         }
       `}</style>
     </QueryClientProvider>
