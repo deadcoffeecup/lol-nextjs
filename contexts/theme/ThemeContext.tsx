@@ -1,5 +1,5 @@
-import { createContext, useContext, useMemo, useState } from 'react';
-import { useThemeDetector } from './useThemeDetector';
+import { createContext, useContext, useMemo, useState, useEffect } from 'react';
+
 import { ThemeContextProps } from './types';
 
 const ThemeContext = createContext<ThemeContextProps>({
@@ -12,8 +12,28 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const deviceTheme = useThemeDetector();
-  const [themeMode, setThemeMode] = useState(deviceTheme);
+  const [isOSDarkTheme, setIsOSDarkTheme] = useState<boolean | undefined>(
+    undefined
+  );
+  const [themeMode, setThemeMode] = useState<string>(
+    isOSDarkTheme ? 'dark' : 'light'
+  );
+
+  useEffect(() => {
+    setThemeMode(isOSDarkTheme ? 'dark' : 'light');
+  }, [isOSDarkTheme]);
+
+  useEffect(() => {
+    const mqListener = (mqListEvent: MediaQueryListEvent) =>
+      setIsOSDarkTheme(mqListEvent.matches);
+    const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
+    darkThemeMq.addEventListener('change', (mqListEvent) =>
+      mqListener(mqListEvent)
+    );
+
+    return () => darkThemeMq.removeEventListener('change', mqListener);
+  }, []);
+
   const themeValues = { themeMode, setThemeMode };
   return useMemo(
     () => (

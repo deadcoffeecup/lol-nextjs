@@ -29,8 +29,13 @@ export const ChampionsPaginated = ({ type }) => {
   }, [data, championsCount, type]);
 
   const { themeMode } = useTheme();
+  console.log(themeMode);
+
   return (
-    <div className='container'>
+    <div
+      style={{ backgroundColor: themeMode === 'light' ? 'white' : 'black' }}
+      className='container'
+    >
       <div>
         <button
           onClick={() =>
