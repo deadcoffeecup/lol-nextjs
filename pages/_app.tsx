@@ -15,6 +15,18 @@ function App({ Component, pageProps }) {
           <ReactQueryDevtools />
         </Layout>
       </ThemeProvider>
+      <style jsx global>{`
+        html,
+        body {
+          height: 100%;
+          width: 100%;
+        }
+
+        * {
+          box-sizing: border-box;
+          margin: 0;
+        }
+      `}</style>
     </QueryClientProvider>
   );
 }
