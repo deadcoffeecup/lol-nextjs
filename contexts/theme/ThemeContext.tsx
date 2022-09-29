@@ -1,4 +1,11 @@
-import { createContext, useContext, useMemo, useState, useEffect } from 'react';
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  useEffect,
+  useLayoutEffect,
+} from 'react';
 
 import { ThemeContextProps } from './types';
 
@@ -22,6 +29,12 @@ export const ThemeProvider = ({ children }) => {
   useEffect(() => {
     setThemeMode(isOSDarkTheme ? 'dark' : 'light');
   }, [isOSDarkTheme]);
+  useLayoutEffect(() => {
+    const isDarkModeOn = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches;
+    setIsOSDarkTheme(isDarkModeOn);
+  }, []);
 
   useEffect(() => {
     const mqListener = (mqListEvent: MediaQueryListEvent) =>
