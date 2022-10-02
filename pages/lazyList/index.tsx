@@ -15,9 +15,9 @@ const LazyChampionsPaginated = ({}) => {
   const elementRef = useRef(null);
   const [isLastVisible, setIsLastVisible] = useState<boolean>(false);
 
-  const lastElementRef = useCallback((node) => {
-    console.log(node);
-  }, []);
+  // const lastElementRef = useCallback((node) => {
+  //   console.log(node);
+  // }, []);
   const NUMBER_OF_SHOWED_CHAMPS = 4;
   const [championsCount, setChampionsCount] = useState<number>(
     NUMBER_OF_SHOWED_CHAMPS
@@ -25,10 +25,7 @@ const LazyChampionsPaginated = ({}) => {
   const [showedData, setShowedData] = useState<ChampionType[]>(
     [] as ChampionType[]
   );
-  const onIntersect = useMemo(
-    () => setChampionsCount((prev) => prev + 5),
-    [championsCount]
-  );
+  const onIntersect = () => setChampionsCount((prev) => prev + 5);
 
   useIntersectionObserver({
     elementRef,
@@ -85,11 +82,11 @@ const LazyChampionsPaginated = ({}) => {
           }
           .champ {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
             background-color: #2222;
             border-radius: 5px;
-            padding: 20px 100px;
+            padding: 20px 70px;
             text-align: center;
             max-width: 30%;
           }

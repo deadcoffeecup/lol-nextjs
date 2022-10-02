@@ -2,7 +2,7 @@ import { Dispatch, MutableRefObject, SetStateAction, useEffect } from 'react';
 
 interface IProps {
   elementRef: MutableRefObject<any>;
-  onIntersect: void;
+  onIntersect: () => void;
 }
 
 export const useIntersectionObserver = ({
@@ -11,12 +11,13 @@ export const useIntersectionObserver = ({
 }: IProps) => {
   const observer = (_div: HTMLDivElement) =>
     new IntersectionObserver(
-      (entries) =>
-        entries.forEach((entry) => entry.isIntersecting && onIntersect),
+      (entries) => {
+        entries[entries.length].isIntersecting && onIntersect();
+      },
       {
         // root,
         rootMargin: '10px',
-        threshold: 1,
+        threshold: 0.1,
       }
     );
   useEffect(() => {
