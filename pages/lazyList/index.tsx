@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { championAvatarAPI } from '../../constants/apis';
 import { getChampions } from '../../hooks/getChampions';
-import { useIntersectionObserver } from '../../hooks/useInterSectionObserver';
+import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 import { ChampionType } from '../../types/champion-data.types';
 
 const LazyChampionsPaginated = ({}) => {

@@ -17,21 +17,14 @@ const Champion = () => {
   const fetchChampions = async () =>
     await axios
       .get(championAPI + championName + '.json')
-      .then((res) => res.data);
+      .then((res) => res.data.data);
 
-  const { data, status, isLoading, error, isFetching } = useQuery(
-    [championName],
-    fetchChampions,
-    {
-      enabled: router.isReady,
-      select: (data) =>
-        data.data.map((el) => {
-          {
-            el.name, el.title, el.id, el.lore;
-          }
-        }),
-    }
-  );
+  const { data, isLoading } = useQuery([championName], fetchChampions, {
+    enabled: router.isReady,
+    onError: (error) => {
+      console.warn(error);
+    },
+  });
 
   useEffect(() => {
     if (data) setChamp(data[championName as string]);
