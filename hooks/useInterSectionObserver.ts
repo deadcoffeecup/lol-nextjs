@@ -1,4 +1,4 @@
-import { Dispatch, MutableRefObject, SetStateAction, useEffect } from 'react';
+import { MutableRefObject, useEffect } from 'react';
 
 interface IProps {
   elementRef: MutableRefObject<any>;
@@ -12,12 +12,13 @@ export const useIntersectionObserver = ({
   const observer = (_div: HTMLDivElement) =>
     new IntersectionObserver(
       (entries) => {
-        entries[entries.length].isIntersecting && onIntersect();
+        entries[entries.length - 1].isIntersecting && onIntersect();
+        console.log(entries[0].target);
       },
       {
         // root,
-        rootMargin: '10px',
-        threshold: 0.1,
+        // rootMargin: '50px',
+        threshold: 1,
       }
     );
   useEffect(() => {
@@ -28,9 +29,7 @@ export const useIntersectionObserver = ({
     elsChilds.forEach((_div: HTMLDivElement) => observer(_div).observe(_div));
 
     return () => {
-      elsChilds.forEach((_div: HTMLDivElement) =>
-        observer(_div).unobserve(_div)
-      );
+      elsChilds.forEach((_div: HTMLDivElement) => observer(_div).disconnect());
     };
-  }, [elementRef]);
+  }, [elementRef.current]);
 };

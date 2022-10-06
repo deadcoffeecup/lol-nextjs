@@ -15,7 +15,6 @@ export const Layout: FC<any> = ({ children }) => {
       <style jsx>{`
         div {
           width: 100%;
-          height: 100%;
         }
       `}</style>
     </div>

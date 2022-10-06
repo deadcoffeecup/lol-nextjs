@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { championAvatarAPI } from '../../constants/apis';
 import { getChampions } from '../../hooks/getChampions';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
@@ -13,30 +7,20 @@ import { ChampionType } from '../../types/champion-data.types';
 const LazyChampionsPaginated = ({}) => {
   const { data, isLoading } = getChampions();
   const elementRef = useRef(null);
-  const [isLastVisible, setIsLastVisible] = useState<boolean>(false);
 
-  // const lastElementRef = useCallback((node) => {
-  //   console.log(node);
-  // }, []);
-  const NUMBER_OF_SHOWED_CHAMPS = 4;
+  const NUMBER_OF_SHOWED_CHAMPS = 5;
   const [championsCount, setChampionsCount] = useState<number>(
     NUMBER_OF_SHOWED_CHAMPS
   );
   const [showedData, setShowedData] = useState<ChampionType[]>(
     [] as ChampionType[]
   );
-  const onIntersect = () => setChampionsCount((prev) => prev + 5);
+  const onIntersect = () => setChampionsCount((prev) => prev + 1);
 
   useIntersectionObserver({
     elementRef,
     onIntersect,
   });
-
-  useEffect(() => {
-    if (isLastVisible) {
-      setIsLastVisible(false);
-    }
-  }, [isLastVisible]);
 
   useEffect(() => {
     if (data) {
