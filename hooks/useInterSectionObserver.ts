@@ -9,19 +9,18 @@ export const useIntersectionObserver = ({
   elementRef,
   onIntersect,
 }: IProps) => {
-  const observer = (_div: HTMLDivElement) =>
-    new IntersectionObserver(
-      (entries) => {
-        entries[entries.length - 1].isIntersecting && onIntersect();
-        console.log(entries[0].target);
-      },
-      {
-        // root,
-        // rootMargin: '50px',
-        threshold: 1,
-      }
-    );
   useEffect(() => {
+    const observer = (_div: HTMLDivElement) =>
+      new IntersectionObserver(
+        (entries) => {
+          entries[0].isIntersecting && onIntersect();
+        },
+        {
+          // root,
+          // rootMargin: '50px',
+          threshold: 0.1,
+        }
+      );
     const elsChilds = elementRef.current
       ? Array.from(elementRef.current.querySelectorAll(`div`))
       : [];
@@ -31,5 +30,5 @@ export const useIntersectionObserver = ({
     return () => {
       elsChilds.forEach((_div: HTMLDivElement) => observer(_div).disconnect());
     };
-  }, [elementRef.current]);
+  }, [Array.from(elementRef.current?.querySelectorAll(`div`))]);
 };
