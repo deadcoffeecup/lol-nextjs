@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { championAvatarAPI } from '../../constants/apis';
 import { getChampions } from '../../hooks/getChampions';
-import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
+
 import { ChampionType } from '../../types/champion-data.types';
 
 const LazyChampionsPaginated = ({}) => {
@@ -15,13 +15,28 @@ const LazyChampionsPaginated = ({}) => {
   const [showedData, setShowedData] = useState<ChampionType[]>(
     [] as ChampionType[]
   );
-  const onIntersect = () => setChampionsCount((prev) => prev + 1);
-  console.log(elementRef?.current?.querySelectorAll(`div`));
 
-  useIntersectionObserver({
-    elementRef,
-    onIntersect,
-  });
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setChampionsCount((prev) => prev + 1);
+          console.log(entries[0].target);
+        }
+      },
+      {
+        // root,
+        // rootMargin: '50px',
+        threshold: 1,
+      }
+    );
+    elementRef.current && observer.observe(elementRef.current);
+
+    return () => {
+      elementRef.current && observer.disconnect();
+    };
+  }, [elementRef]);
 
   useEffect(() => {
     if (data) {
