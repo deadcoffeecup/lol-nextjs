@@ -4,7 +4,7 @@ import { getChampions } from '../../hooks/getChampions';
 
 import { ChampionType } from '../../types/champion-data.types';
 
-const LazyChampionsPaginated = ({}) => {
+const LazyChampionsPaginated = () => {
   const { data, isLoading } = getChampions();
   const elementRef = useRef(null);
 
@@ -17,26 +17,29 @@ const LazyChampionsPaginated = ({}) => {
   );
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (entry.isIntersecting) {
-          setChampionsCount((prev) => prev + 1);
-          console.log(entries[0].target);
+    const observer = (_div: HTMLDivElement) =>
+      new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setChampionsCount((prev) => prev + 1);
+          }
+        },
+        {
+          // root,
+          rootMargin: '50px',
+          threshold: 0.9,
         }
-      },
-      {
-        // root,
-        // rootMargin: '50px',
-        threshold: 1,
-      }
-    );
-    elementRef.current && observer.observe(elementRef.current);
+      );
+    const elsChilds = elementRef.current
+      ? Array.from(elementRef.current.querySelectorAll(`div`))
+      : [];
+
+    elsChilds.forEach((_div: HTMLDivElement) => observer(_div).observe(_div));
 
     return () => {
-      elementRef.current && observer.disconnect();
+      elsChilds.forEach((_div: HTMLDivElement) => observer(_div).disconnect());
     };
-  }, [elementRef]);
+  }, []);
 
   useEffect(() => {
     if (data) {
