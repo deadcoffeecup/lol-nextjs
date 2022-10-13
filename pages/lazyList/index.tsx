@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { championAvatarAPI } from '../../constants/apis';
 import { getChampions } from '../../hooks/getChampions';
+import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 
 import { ChampionType } from '../../types/champion-data.types';
 
 const LazyChampionsPaginated = () => {
   const { data, isLoading } = getChampions();
-  const elementRef = useRef(null);
+  const lastElementRef = useRef(null);
 
   const NUMBER_OF_SHOWED_CHAMPS = 5;
   const [championsCount, setChampionsCount] = useState<number>(
@@ -15,32 +16,11 @@ const LazyChampionsPaginated = () => {
   const [showedData, setShowedData] = useState<ChampionType[]>(
     [] as ChampionType[]
   );
+  const onIntersect = () => {
+    setChampionsCount((prev) => prev + 1);
+  };
 
-  useEffect(() => {
-    const observer = (_div: HTMLDivElement) =>
-      new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setChampionsCount((prev) => prev + 1);
-          }
-        },
-        {
-          // root,
-          rootMargin: '50px',
-          threshold: 0.9,
-        }
-      );
-    const elsChilds = elementRef.current
-      ? Array.from(elementRef.current.querySelectorAll(`div`))
-      : [];
-
-    elsChilds.forEach((_div: HTMLDivElement) => observer(_div).observe(_div));
-
-    return () => {
-      elsChilds.forEach((_div: HTMLDivElement) => observer(_div).disconnect());
-    };
-  }, []);
-
+  useIntersectionObserver({ lastElementRef, onIntersect });
   useEffect(() => {
     if (data) {
       setShowedData(
@@ -55,7 +35,7 @@ const LazyChampionsPaginated = () => {
   return (
     <div className='container'>
       {isLoading && <h2>Loading...</h2>}
-      <div ref={elementRef} className='champs'>
+      <div className='champs'>
         {showedData?.map((champion: ChampionType, index) => (
           <div className='champ' key={champion.id}>
             <img
@@ -70,34 +50,34 @@ const LazyChampionsPaginated = () => {
             </ul>
           </div>
         ))}
-
-        <style jsx>{`
-          .container {
-            margin: 0 50px;
-          }
-          .champs {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-          }
-          .champ {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #2222;
-            border-radius: 5px;
-            padding: 20px 70px;
-            text-align: center;
-            max-width: 30%;
-          }
-          img {
-            border-radius: 5px;
-          }
-        `}</style>
+        <div ref={lastElementRef} />
       </div>
+      <style jsx>{`
+        .container {
+          margin: 0 50px;
+        }
+        .champs {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 20px;
+        }
+        .champ {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: #2222;
+          border-radius: 5px;
+          padding: 20px 70px;
+          text-align: center;
+          max-width: 30%;
+        }
+        img {
+          border-radius: 5px;
+        }
+      `}</style>
     </div>
   );
 };

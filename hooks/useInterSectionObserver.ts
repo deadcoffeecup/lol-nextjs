@@ -1,12 +1,12 @@
 import { MutableRefObject, useEffect } from 'react';
 
 interface IProps {
-  elementRef: MutableRefObject<any>;
+  lastElementRef: MutableRefObject<any>;
   onIntersect: () => void;
 }
 
 export const useIntersectionObserver = ({
-  elementRef,
+  lastElementRef,
   onIntersect,
 }: IProps) => {
   useEffect(() => {
@@ -21,8 +21,8 @@ export const useIntersectionObserver = ({
           threshold: 0.1,
         }
       );
-    const elsChilds = elementRef.current
-      ? Array.from(elementRef.current.querySelectorAll(`div`))
+    const elsChilds = lastElementRef.current
+      ? Array.from(lastElementRef.current.querySelectorAll(`div`))
       : [];
 
     elsChilds.forEach((_div: HTMLDivElement) => observer(_div).observe(_div));
@@ -30,5 +30,5 @@ export const useIntersectionObserver = ({
     return () => {
       elsChilds.forEach((_div: HTMLDivElement) => observer(_div).disconnect());
     };
-  }, [Array.from(elementRef.current?.querySelectorAll(`div`))]);
+  }, [Array.from(lastElementRef.current?.querySelectorAll(`div`))]);
 };
