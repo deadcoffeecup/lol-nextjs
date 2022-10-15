@@ -9,7 +9,7 @@ const LazyChampionsPaginated = () => {
   const { data, isLoading } = getChampions();
   const lastElementRef = useRef(null);
 
-  const NUMBER_OF_SHOWED_CHAMPS = 5;
+  const NUMBER_OF_SHOWED_CHAMPS = 7;
   const [championsCount, setChampionsCount] = useState<number>(
     NUMBER_OF_SHOWED_CHAMPS
   );
@@ -17,7 +17,7 @@ const LazyChampionsPaginated = () => {
     [] as ChampionType[]
   );
   const onIntersect = () => {
-    setChampionsCount((prev) => prev + 1);
+    setChampionsCount((prev) => prev + 3);
   };
 
   useIntersectionObserver({ lastElementRef, onIntersect });
@@ -36,7 +36,7 @@ const LazyChampionsPaginated = () => {
     <div className='container'>
       {isLoading && <h2>Loading...</h2>}
       <div className='champs'>
-        {showedData?.map((champion: ChampionType, index) => (
+        {showedData?.map((champion: ChampionType) => (
           <div className='champ' key={champion.id}>
             <img
               alt={champion.name}
