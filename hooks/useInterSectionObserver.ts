@@ -19,9 +19,6 @@ export const useIntersectionObserver = ({
         threshold: 0.1,
       }
     );
-    const elsChilds = lastElementRef.current
-      ? Array.from(lastElementRef.current.querySelectorAll(`div`))
-      : [];
 
     const el = lastElementRef && lastElementRef.current;
 
