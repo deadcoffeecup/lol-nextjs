@@ -15,7 +15,7 @@ export const useIntersectionObserver = ({
         entries.forEach((entry) => entry.isIntersecting && onIntersect()),
       {
         // root,
-        // rootMargin: '50px',
+        rootMargin: '100px',
         threshold: 0.1,
       }
     );

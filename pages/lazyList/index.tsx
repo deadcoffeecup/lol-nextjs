@@ -17,7 +17,7 @@ const LazyChampionsPaginated = () => {
     [] as ChampionType[]
   );
   const onIntersect = () => {
-    setChampionsCount((prev) => prev + 3);
+    setChampionsCount((prev) => prev + 5);
   };
 
   useIntersectionObserver({ lastElementRef, onIntersect });
